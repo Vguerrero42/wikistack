@@ -3,6 +3,8 @@ const app = express();
 const morgan = require("morgan");
 const layout = require("./views/layout");
 const models = require('./models')
+const wikiRoute = require('./routes/wiki')
+const userRoute = require('./routes/user')
 
 
 app.use(morgan("dev"));
@@ -14,10 +16,13 @@ then(() => {
   console.log('connected to the database');
 })
 
+app.use('/wiki',wikiRoute)
+//app.use('/user',userRoute)
+
 app.get('/', (req,res) => {
-  let mainPage = layout('')
-  res.send(mainPage)
+  res.redirect('/wiki')
 })
+
 
 const init = async () => {
   await models.db.sync({force: true})
