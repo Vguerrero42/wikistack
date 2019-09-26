@@ -21,5 +21,16 @@ router.get('/add',(req,res) => {
     res.send(addPage())
 })
 
+router.get('/:slug', async (req,res,next) =>{
+   try{
+        const page = await Page.findOne({
+        where: {slug : req.params.slug}
+    })
+    res.json(page)
+}
+catch(error){next(error)}
+})
+
+
 
 module.exports = router
